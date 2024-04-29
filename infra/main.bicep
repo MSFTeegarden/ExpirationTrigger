@@ -1,21 +1,22 @@
 targetScope = 'subscription'
 
 @minLength(1)
-@maxLength(7)
-@description('Provide a common prefix for all resources in this example. This will help avoid name collisions. Max length is 7 characters.')
-param prefix string
+@maxLength(64)
+@description('Name of the environment that can be used as part of naming resource convention')
+param environmentName string
 
-// feel free to change this to the region of your choice
-param location string = 'eastus'
+@minLength(1)
+@description('Primary location for all resources')
+param location string
 
 // this tag tells azd which environment to use. The 'expirationfunction' name refers to the app in the azure.yaml file
 var tags = {
-  'azd-env-name': 'expirationfunction'
+  'azd-env-name': environmentName
 }
 
 // Create a new resource group
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
-  name: '${prefix}-rg'
+  name: '${environmentName}-rg'
   location: location
   tags: tags
 }
@@ -24,7 +25,7 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
 module resources './resources.bicep' = {
   name: 'resources'
   params: {
-    prefix: prefix
+    prefix: environmentName
     location: location
     tags: tags
   }
