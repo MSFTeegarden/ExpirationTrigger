@@ -35,7 +35,7 @@ param linuxFxVersion string = 'DOTNET-ISOLATED|8.0'
 var functionAppName = '${prefix}-function-${uniqueString(resourceGroup().id)}'
 var hostingPlanName = '${prefix}-plan-${uniqueString(resourceGroup().id)}'
 var applicationInsightsName = '${prefix}-appinsights-${uniqueString(resourceGroup().id)}'
-var storageAccountName = '${prefix}${uniqueString(resourceGroup().id)}'
+var storageAccountName = 'storage${uniqueString(resourceGroup().id)}'
 var functionWorkerRuntime = runtime
 
 // create a redis cache with keyspace notifications configured
